@@ -300,7 +300,7 @@ if [ ! -f "${initfile}" ]; then
     sed -i 's,rundeck.server.uuid \=.*,rundeck.server.uuid \= '$(uuidgen)',g' /etc/rundeck/framework.properties
    fi
 
-   sed -i 's,JAAS_CONF\=.*,JAAS_CONF\="/etc/rundeck/'${JAAS_CONF_FILE}'",' /etc/rundeck/profile
+   sed -i 's,JAAS_CONF\=.*,JAAS_CONF\="'${JAAS_CONF_FILE}'",' /etc/rundeck/profile
    sed -i 's,LOGIN_MODULE\=.*,LOGIN_MODULE\="'${LOGIN_MODULE}'",' /etc/rundeck/profile
    sed -i 's,keystore\.password\=.*,keystore\.password\='${KEYSTORE_PASS}',' /etc/rundeck/ssl/ssl.properties
    sed -i 's,key\.password\=.*,key\.password\='${TRUSTSTORE_PASS}',' /etc/rundeck/ssl/ssl.properties
