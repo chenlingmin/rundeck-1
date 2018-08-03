@@ -12,18 +12,19 @@ ENV SERVER_URL=https://localhost:4443 \
     LOGIN_MODULE=RDpropertyfilelogin \
     JAAS_CONF_FILE=jaas-loginmodule.conf \
     KEYSTORE_PASS=adminadmin \
-    TRUSTSTORE_PASS=adminadmin
+    TRUSTSTORE_PASS=adminadmin \
+    CLUSTER_MODE=false
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
     apt-get -qq update && \
-    apt-get -qqy install -t stretch-backports --no-install-recommends bash openjdk-8-jre-headless ca-certificates-java supervisor procps sudo ca-certificates openssh-client mysql-server mysql-client postgresql-9.6 postgresql-client-9.6 pwgen curl git uuid-runtime parallel && \
+    apt-get -qqy install -t stretch-backports --no-install-recommends bash openjdk-8-jre-headless ca-certificates-java supervisor procps sudo ca-certificates openssh-client mysql-server mysql-client postgresql-9.6 postgresql-client-9.6 pwgen curl git uuid-runtime parallel jq && \
     cd /tmp/ && \
-    curl -Lo /tmp/rundeck.deb http://dl.bintray.com/rundeck/rundeck-deb/rundeck_2.11.1-1-GA_all.deb && \
-    echo '86e03a9c41228d9de736c4cb8e2a2d4f5a0e266376cffb1327b5aa2ae70ce544  rundeck.deb' > /tmp/rundeck.sig && \
+    curl -Lo /tmp/rundeck.deb http://dl.bintray.com/rundeck/rundeck-deb/rundeck_3.0.0.20180727-1.201807272200_all.deb && \
+    echo '614e7a69614df14a0a33b0c92dfeb649aea09f866883a0548ba59b4fb378aaad  rundeck.deb' > /tmp/rundeck.sig && \
     shasum -a256 -c /tmp/rundeck.sig && \
-    curl -Lo /tmp/rundeck-cli.deb https://github.com/rundeck/rundeck-cli/releases/download/v1.0.26/rundeck-cli_1.0.26-1_all.deb && \
-    echo '0a584165e2ec7626bab8357c3ef63c81773f9ea2f359644a09144de717dc5c4a  rundeck-cli.deb' > /tmp/rundeck-cli.sig && \
+    curl -Lo /tmp/rundeck-cli.deb https://github.com/rundeck/rundeck-cli/releases/download/v1.0.29/rundeck-cli_1.0.29-1_all.deb && \
+    echo '6708723c41858b81bde450eb69d6f605d655c62b546b5ed0ba351fb95cff0d60  rundeck-cli.deb' > /tmp/rundeck-cli.sig && \
     shasum -a256 -c /tmp/rundeck-cli.sig && \
     cd - && \
     dpkg -i /tmp/rundeck*.deb && rm /tmp/rundeck*.deb && \
